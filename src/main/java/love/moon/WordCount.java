@@ -24,9 +24,11 @@ public class WordCount {
 
         public void map(LongWritable key, Text value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
             String line = value.toString();
+            System.out.println("map--line:"+line);
             StringTokenizer tokenizer = new StringTokenizer(line);
             while (tokenizer.hasMoreTokens()) {
                 word.set(tokenizer.nextToken());
+                System.out.println("map--word:"+word);
                 output.collect(word, one);
             }
         }
@@ -36,7 +38,9 @@ public class WordCount {
         public void reduce(Text key, Iterator<IntWritable> values, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
             int sum = 0;
             while (values.hasNext()) {
-                sum += values.next().get();
+               IntWritable one=values.next();
+                 System.out.println("Reduce--one:"+one);
+                sum += one.get();
             }
             output.collect(key, new IntWritable(sum));
         }
@@ -55,8 +59,8 @@ public class WordCount {
         conf.setInputFormat(TextInputFormat.class);
         conf.setOutputFormat(TextOutputFormat.class);
 
-        FileInputFormat.setInputPaths(conf, new Path(args[0]));
-        FileOutputFormat.setOutputPath(conf, new Path(args[1]));
+        FileInputFormat.setInputPaths(conf, new Path(".\\a.txt"));
+        FileOutputFormat.setOutputPath(conf, new Path(".\\output"));
 
         JobClient.runJob(conf);
     }

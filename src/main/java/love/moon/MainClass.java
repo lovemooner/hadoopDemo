@@ -2,6 +2,8 @@ package love.moon;
 
 import org.apache.commons.lang.ArrayUtils;
 
+import java.util.StringTokenizer;
+
 /**
  * User: lovemooner
  * Date: 17-3-29
@@ -10,7 +12,10 @@ import org.apache.commons.lang.ArrayUtils;
 public class MainClass {
 
     public static void main(String[] args) {
-       String[] s={"s"};
-        System.out.println("Hi:"+ArrayUtils.isEmpty(s));
+        String line = "Hello World Bye World";
+        StringTokenizer tokenizer = new StringTokenizer(line);
+        while (tokenizer.hasMoreTokens()) {
+            System.out.println("map--word:" + tokenizer.nextToken());
+        }
     }
 }
